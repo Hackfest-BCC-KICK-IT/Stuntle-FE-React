@@ -18,16 +18,17 @@ const PopModal: React.FC<PopModalProps> = ({ isOpen, onClose, onDelete }) => {
             </h2>
             <div className="flex flex-col gap-4 items-center">
               <button
-                className="w-full md:w-[50%] h-[46px] bg-transparent  text-ms text-orange font-semibold py-2 px-4 border border-border-grey rounded-lg"
-                onClick={onDelete}
+                type="button"
+                className="w-full md:w-[50%] h-[46px] bg-transparent text-ms text-orange font-semibold py-2 px-4 border border-border-grey rounded-lg"
+                onClick={() => onDelete()}
               >
                 Ya, Hapus Data
               </button>
 
               <button
                 type="button"
-                onClick={onClose}
-                className=" bg-orange  text-white  rounded-lg block text-ms font-semibold w-full md:w-[50%] h-[46px]  "
+                onClick={() => onClose()}
+                className="bg-orange text-white rounded-lg block text-ms font-semibold w-full md:w-[50%] h-[46px]"
               >
                 Tidak, Batalkan Hapus Data
               </button>

@@ -1,32 +1,57 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import MainLayout from "../../layout/Mainlayout";
 import { useState } from "react";
 import PopModal from "../../components/PopUp";
+import { useFetch } from "../../hooks/useFetch";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 interface DetailWaGroupProps {
   id: number;
   namaGrup: string;
   linkGrup: string;
+  createdAt: string;
 }
 
 const DetailWaGroup = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const data = location.state?.grup as DetailWaGroupProps;
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [userData] = useLocalStorage("user");
+
+  const [, , , formSubmit, isSuccess] = useFetch<{}>({
+    method: "DELETE",
+    url: `/whatsapp/${data.id}`,
+    headers: {
+      Authorization: `Bearer ${userData.jwtToken} `,
+    },
+  });
 
   const handleDeleteClick = () => {
     return setIsOpen(true);
   };
 
+  //want delete grup
   const handleDeleteConfirm = () => {
+    formSubmit();
     setIsOpen(false);
   };
+
+  //cance delete pop up grup
   const handleDeleteCancel = () => {
     setIsOpen(false);
   };
 
-  const valueText1 = data.namaGrup;
-  const valueText2 = data.linkGrup;
+  const handleLoginSuccess = () => {
+    navigate("/waGruop");
+  };
+
+  if (isSuccess) {
+    handleLoginSuccess();
+  }
+
+  const nama = data.namaGrup;
+  const link = data.linkGrup;
 
   return (
     <MainLayout>
@@ -34,13 +59,13 @@ const DetailWaGroup = () => {
         <h1 className="heading1  text-center">Detail Grup</h1>
         <div className="my-8">
           <p className="font-medium text-xl text-black mb-4">
-            Nama Grup Whatsapp: {valueText1}
+            Nama Grup Whatsapp: {nama}
           </p>
           <p className="font-medium text-xl text-black mb-4">
-            Link Grup Whatsapp: {valueText2}
+            Link Grup Whatsapp: {link}
           </p>
           <p className="font-medium text-xl text-black ">
-            Diinput Pada Tanggal: 10 April 2023
+            Diinput Pada Tanggal: {data.createdAt}
           </p>
         </div>
         <div className="flex flex-col md:flex-row my-8 w-full gap-4  items-center">
@@ -51,7 +76,7 @@ const DetailWaGroup = () => {
             Hapus Grup
           </button>
           <Link
-            to={`/editDetailWaGruop?valueText1=${valueText1}&valueText2=${valueText2}`}
+            to={`/editDetailWaGruop?nama=${nama}&link=${link}&id=${data.id}`}
             className=" w-full md:w-[50%] h-[46px]"
           >
             <button
@@ -65,8 +90,8 @@ const DetailWaGroup = () => {
       </section>
       <PopModal
         isOpen={isOpen}
-        onClose={handleDeleteCancel}
-        onDelete={handleDeleteConfirm}
+        onClose={() => handleDeleteCancel()}
+        onDelete={() => handleDeleteConfirm()}
       />
     </MainLayout>
   );

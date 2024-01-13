@@ -41,10 +41,8 @@ const AddWaGroup = () => {
     formSubmit();
   };
 
-  //if api succes
+  //if api succes and navigate to wa group page
   const handleLoginSuccess = () => {
-    localStorage.setItem("user", JSON.stringify(data));
-
     navigator("/waGruop");
   };
 
