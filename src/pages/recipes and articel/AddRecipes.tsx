@@ -48,7 +48,7 @@ const AddRecipes = () => {
   const recepiesFor = formRecipes.targetResep === "orang_tua";
 
   // consume Api
-  const [isLoading, data, error, formSubmit, isSuccess] = useFetch(
+  const [isLoading, , , formSubmit, isSuccess] = useFetch(
     {
       method: "POST",
       url: "/resep/makanan",

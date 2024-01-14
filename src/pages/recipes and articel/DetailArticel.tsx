@@ -1,5 +1,4 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import TwoButton from "../../components/TwoButton";
 import MainLayout from "../../layout/Mainlayout";
 import PopModal from "../../components/PopUp";
 import { useState } from "react";

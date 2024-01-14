@@ -22,8 +22,8 @@ const Navbar = () => {
           } absolute top-20 right-0 bg-neutral-white w-screen `}
         >
           <ul className="space-y-2 font-medium px-2 pt-2">
-            {SidebarData.map((item) => (
-              <li key={item.id}>
+            {SidebarData.map((item, index) => (
+              <li key={index}>
                 <NavLink
                   to={item.path}
                   className="flex items-center w-screen font-semibold p-2 text-gray-900 hover:text-white hover:bg-orange "

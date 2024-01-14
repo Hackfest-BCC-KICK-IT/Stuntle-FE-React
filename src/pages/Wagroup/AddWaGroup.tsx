@@ -16,7 +16,7 @@ const AddWaGroup = () => {
   const [userData] = useLocalStorage("user");
 
   // consume api
-  const [isLoading, data, error, formSubmit, isSuccess] = useFetch({
+  const [isLoading, , , formSubmit, isSuccess] = useFetch({
     method: "POST",
     url: "/whatsapp",
     data: formAddWa,

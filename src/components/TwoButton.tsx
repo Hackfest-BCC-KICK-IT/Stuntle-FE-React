@@ -16,7 +16,6 @@ interface TwoButtonProps {
 const TwoButton = ({
   textButton1,
   textButton2,
-  route,
   typeButton,
   idForm,
   onTapFunc,

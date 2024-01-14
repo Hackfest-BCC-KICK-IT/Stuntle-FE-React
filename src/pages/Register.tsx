@@ -28,7 +28,7 @@ const Register = () => {
     setFormUser({ ...formUser, [name]: value });
   };
 
-  const [isLoading, data, error, formSubmit, isSuccess] = useFetch({
+  const [isLoading, , , formSubmit, isSuccess] = useFetch({
     method: "POST",
     url: "/faskes",
     data: formUser,
