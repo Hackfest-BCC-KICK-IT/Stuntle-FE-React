@@ -14,7 +14,7 @@ const PopModal: React.FC<PopModalProps> = ({ isOpen, onClose, onDelete }) => {
           <div className="fixed inset-0 bg-black opacity-50"></div>
           <div className="bg-white w-1/2 p-6 rounded-lg shadow-lg relative z-10">
             <h2 className="text-center text-3xl mb-8 font-semibold">
-              Yakin Ingin Menghapus Link Grup Ini?
+              Yakin Ingin Menghapus?
             </h2>
             <div className="flex flex-col gap-4 items-center">
               <button

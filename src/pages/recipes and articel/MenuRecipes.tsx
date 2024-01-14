@@ -1,8 +1,45 @@
 import { Link } from "react-router-dom";
 import MainLayout from "../../layout/Mainlayout";
 import SearchIcon from "../../assets/SearchIcon";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { useFetch } from "../../hooks/useFetch";
+import Loader from "../../components/Loader";
+
+interface MenuRecipes {
+  id: number;
+  publicId: string;
+  urlGambar: string;
+  judulResep: string;
+  targetResep: string;
+  targetUsiaResep: string;
+  jenis: string;
+  bahanUtama: string;
+  durasiMemasak: string;
+  bahanText: string;
+  caraMembuatText: string;
+  nilaiGiziText: string;
+  createdAt: string;
+}
 
 const MenuRecipes = () => {
+  let listRecepies: MenuRecipes[] = [];
+  const [userData] = useLocalStorage("user");
+  const [isLoading, data, , , isSuccess] = useFetch<{
+    data: MenuRecipes[];
+  }>(
+    {
+      method: "GET",
+      url: "/resep/makanan?limit=10&page=0",
+      headers: {
+        Authorization: `Bearer ${userData.jwtToken} `,
+      },
+    },
+    true
+  );
+
+  if (isSuccess) {
+    listRecepies = data?.data || [];
+  }
   return (
     <MainLayout>
       <section>
@@ -13,9 +50,10 @@ const MenuRecipes = () => {
         <Link to={"/addRecipes"} className="w-full">
           <button
             type="button"
+            disabled={isLoading}
             className=" bg-orange  text-white my-5  rounded-lg block text-ms font-semibold w-full h-[46px]"
           >
-            Upload Resep Makanan Baru Disini
+            {isLoading ? <Loader /> : "Upload Artikel Baru Disini"}
           </button>
         </Link>
 
@@ -43,13 +81,13 @@ const MenuRecipes = () => {
           </div>
         </form>
 
-        {[...Array(3)].map((_, index) => (
+        {listRecepies.map((item, index) => (
           <div
             key={index}
             className="my-3 py-2 px-4 border border-border-grey rounded-lg flex flex-col sm:flex-row justify-between items-center"
           >
-            <p className="mb-2 sm:mb-0 sm:mr-4">Bubur Ayam Sehat Dan Lezat</p>
-            <Link to={"/detailRecipes"}>
+            <p className="mb-2 sm:mb-0 sm:mr-4">{item.judulResep}</p>
+            <Link to={"/detailRecipes"} state={{ recepies: item }}>
               <button
                 type="button"
                 className="text-light-violet outline-none mt-2 sm:mt-0"
