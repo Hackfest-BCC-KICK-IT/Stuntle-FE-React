@@ -23,6 +23,8 @@ import DetailArticel from "./pages/recipes and articel/DetailArticel";
 import ListHelp from "./pages/request help/ListHelp";
 import DetailHelp from "./pages/request help/DetailHelp";
 import Register from "./pages/Register";
+import DataStunting from "./pages/data_stunting/DataStunting";
+import Tagihan from "./pages/tagihan/Tagihan";
 
 function App() {
   return (
@@ -52,6 +54,8 @@ function App() {
         <Route path="/listHelp" element={<ListHelp />} />
         <Route path="/detailHelp" element={<DetailHelp />} />
         <Route path="/profil" element={<Profil />} />
+        <Route path="/dataStunting" element={<DataStunting />} />
+        <Route path="/tagihan" element={<Tagihan />} />
       </Routes>
     </BrowserRouter>
   );

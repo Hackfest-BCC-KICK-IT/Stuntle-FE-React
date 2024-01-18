@@ -25,11 +25,11 @@ export const SidebarData = [
   },
   {
     title: "Tagihan Layanan",
-    path: "/homePage",
+    path: "/tagihan",
   },
   {
     title: "API Data Stunting Saya",
-    path: "/homePage",
+    path: "/dataStunting",
   },
   {
     title: "Keluar",
