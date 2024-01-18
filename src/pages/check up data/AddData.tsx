@@ -1,8 +1,25 @@
 import { Link } from "react-router-dom";
 import SearchIcon from "../../assets/SearchIcon";
 import MainLayout from "../../layout/Mainlayout";
+import { useState } from "react";
+import FilterChips from "./components/FilterChip";
 
 const AddData = () => {
+  const [activeTab, setActiveTab] = useState("dataKehamilan");
+  const [selectedKondisi, setSelectedKondisi] = useState("Semua Kondisi");
+  const [selectedUsia, setSelectedUsia] = useState("Semua Bulan");
+
+  const handleSelectKondisi = (filter: string) => {
+    setSelectedKondisi(filter);
+  };
+  const handleSelecUsia = (filter: string) => {
+    setSelectedUsia(filter);
+  };
+
+  const handleTabClick = (tabName: string) => {
+    setActiveTab(tabName);
+  };
+
   return (
     <MainLayout>
       <section>
@@ -33,6 +50,76 @@ const AddData = () => {
             </button>
           </div>
         </form>
+
+        <ul className="mb-5 flex list-none flex-row flex-wrap border-b-0 pl-0">
+          <li role="presentation">
+            <button
+              onClick={() => handleTabClick("semuaData")}
+              className={`my-2 block border-x-0 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium leading-tight ${
+                activeTab === "semuaData"
+                  ? "text-orange  border-b-2 border-b-orange "
+                  : "border-b-0 text-grey "
+              }`}
+            >
+              Semua Data
+            </button>
+          </li>
+          <li role="presentation">
+            <button
+              onClick={() => handleTabClick("dataKehamilan")}
+              className={`my-2 block border-x-0 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium leading-tight ${
+                activeTab === "dataKehamilan"
+                  ? "text-orange border-b-2 border-b-orange "
+                  : "border-b-0 text-grey "
+              }`}
+            >
+              Data Kehamilan
+            </button>
+          </li>
+          <li role="presentation">
+            <button
+              onClick={() => handleTabClick("dataAnak")}
+              className={`my-2 block focus:border-b-2 border-b-0 focus:text-orange text-grey border-x-0 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium leading-tight ${
+                activeTab === "dataAnak"
+                  ? "text-orange border-b-2  border-b-orange"
+                  : "border-b-0 text-grey "
+              }`}
+            >
+              Data Anak
+            </button>
+          </li>
+        </ul>
+
+        <div>
+          {activeTab === "dataKehamilan" && (
+            <div className="my-4 flex flex-col">
+              <div className="flex">
+                <h2 className="font-bold">Filter Kondisi:</h2>
+                <FilterChips
+                  selectedFilter={selectedKondisi}
+                  filters={["Semua Kondisi", "Baik", "Lemah", "Beresiko"]}
+                  onSelectFilter={handleSelectKondisi}
+                  filterType="kondisi"
+                />
+              </div>
+              <div className="flex">
+                <h2 className="font-bold">Filter Usia:</h2>
+                <FilterChips
+                  selectedFilter={selectedUsia}
+                  filters={[
+                    "Semua Bulan",
+                    "1-3 Bulan",
+                    "4-6 Bulan",
+                    "7-9 Bulan",
+                    "Di atas 9 Bulan",
+                  ]}
+                  onSelectFilter={handleSelecUsia}
+                  filterType="usia"
+                />
+              </div>
+            </div>
+          )}
+        </div>
 
         {[...Array(6)].map((_, index) => (
           <div

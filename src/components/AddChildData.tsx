@@ -14,6 +14,9 @@ const AddChildData = () => {
           Tanggal Lahir Anak: 10 Oktober 2023
         </h3>
         <h3 className="font-medium text-base mt-5">
+          Usia Anak Saat Ini: 1 Tahun 3 Bulan 4 Hari
+        </h3>
+        <h3 className="font-medium text-base mt-5">
           Jenis Kelamin Anak: Laki-Laki
         </h3>
         <h3 className="font-medium text-base mt-5">Kondisi Lahir: Sehat</h3>

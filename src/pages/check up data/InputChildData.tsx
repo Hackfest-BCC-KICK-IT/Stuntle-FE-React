@@ -43,8 +43,8 @@ const InputChildData = () => {
 
           <FliedPrenaghcyInput
             heading="Umur Anak*"
-            subtext="Pastikan Angka Usia Anak Yang Diinput Menggunakan Satuan Tahun"
-            child={<InputFlied placeHolder="Masukkan Usia Anak Disini" />}
+            subtext="Pastikan Angka Usia Anak Yang Diinput Dalam Bentuk Tahun/Bulan/Hari"
+            child={<InputFlied placeHolder="Tahun/Bulan/Hari" />}
           />
           <FliedPrenaghcyInput
             heading="Tinggi Anak*"
