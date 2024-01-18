@@ -38,6 +38,18 @@ export const HomepageDataPrenangcy = [
     data: 3,
     subtitle: "Diantaranya sudah ada data pemeriksaannya",
   },
+  {
+    data: 10,
+    subtitle: "Kehamilan dari pemeriksaan terakhir berstatus “Baik”",
+  },
+  {
+    data: 2,
+    subtitle: "Kehamilan dari pemeriksaan terakhir berstatus “Lemah”",
+  },
+  {
+    data: 3,
+    subtitle: "Kehamilan dari pemeriksaan terakhir berstatus “Beresiko”",
+  },
 ];
 
 export const HomepageDataChild = [
@@ -52,5 +64,19 @@ export const HomepageDataChild = [
   {
     data: 7,
     subtitle: "Diantaranya sudah ada data pemeriksaannya",
+  },
+  {
+    data: 10,
+    subtitle: "Bayi/Anak dari pemeriksaan terakhir berstatus “Baik”",
+  },
+  {
+    data: 3,
+    subtitle:
+      "Bayi/Anak dari pemeriksaan terakhir berstatus “Berpotensi Stunting”",
+  },
+  {
+    data: 7,
+    subtitle:
+      "Bayi/Anak dari pemeriksaan terakhir berstatus “Terindikasi Stunting”",
   },
 ];
