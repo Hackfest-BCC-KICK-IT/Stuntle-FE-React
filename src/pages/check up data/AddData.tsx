@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import SearchIcon from "../../assets/SearchIcon";
 import MainLayout from "../../layout/Mainlayout";
 import { useState } from "react";
-import FilterChips from "./components/FilterChip";
+import FilterChips from "../../components/FilterChip";
 
 const AddData = () => {
   const [activeTab, setActiveTab] = useState("dataKehamilan");

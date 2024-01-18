@@ -51,6 +51,7 @@ const ProsesHelp: React.FC<{ item: HelpModel }> = ({ item }) => {
         <p className="mt-4 text-lg font-medium">
           Deskripsi Pengajuan: {item.deskripsi}
         </p>
+        <p className="mt-4 text-lg font-medium">Apakah Genting: YA</p>
 
         <p className="mt-4 text-lg font-medium">
           Status Pengajuan: <span className="text-yellow">DiProses</span>

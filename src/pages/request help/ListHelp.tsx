@@ -4,9 +4,12 @@ import SearchIcon from "../../assets/SearchIcon";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useFetch } from "../../hooks/useFetch";
 import Loader from "../../components/Loader";
+import FilterChips from "../../components/FilterChip";
+import { useState } from "react";
 
 const ListHelp = () => {
   let listData: HelpModel[] = [];
+  const [selectedFilter, setSelectedFilter] = useState("Semua Pengajuan");
   const location = useLocation();
   const helpType = location.state?.type;
   const [userData] = useLocalStorage("user");
@@ -27,6 +30,9 @@ const ListHelp = () => {
     listData = data?.data || [];
   }
 
+  const handleSelectedFilter = (filter: string) => {
+    setSelectedFilter(filter);
+  };
   //menentukan title text dari helpType halaman sebelumnnnya
   const titleText = () => {
     if (helpType == "diproses") {
@@ -67,6 +73,19 @@ const ListHelp = () => {
             </button>
           </div>
         </form>
+        <div className="flex">
+          <h2 className="font-bold">Filter Usia:</h2>
+          <FilterChips
+            selectedFilter={selectedFilter}
+            filters={[
+              "Semua Pengajuan",
+              "Pengajuan Genting",
+              "Pengajuan Non Genting",
+            ]}
+            onSelectFilter={handleSelectedFilter}
+            filterType="usia"
+          />
+        </div>
 
         {listData.length > 0 ? (
           listData.map((item, index) => (
