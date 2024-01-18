@@ -8,7 +8,7 @@ const PermintaanBantuan = () => {
         <h1 className="heading1 mb-5">Menu Permintaan Bantuan </h1>
         <Link
           to={"/listHelp"}
-          state={{ title: "Perlu Diproses" }}
+          state={{ type: "diproses" }}
           className="h-[70px] w-full bg-light-yellow rounded-lg flex justify-between items-center px-5"
         >
           <p className="font-bold text-sm md:text-2xl text-yellow">
@@ -20,7 +20,7 @@ const PermintaanBantuan = () => {
         </Link>
         <Link
           to={"/listHelp"}
-          state={{ title: "Diterima" }}
+          state={{ type: "sukses" }}
           className="h-[70px] my-4 w-full bg-light-green rounded-lg flex justify-between items-center px-5"
         >
           <p className="font-bold text-sm md:text-2xl text-green ">
@@ -32,7 +32,7 @@ const PermintaanBantuan = () => {
         </Link>
         <Link
           to={"/listHelp"}
-          state={{ title: "Ditolak" }}
+          state={{ type: "gagal" }}
           className="h-[70px] my-4 w-full bg-light-red rounded-lg flex justify-between items-center px-5"
         >
           <p className="font-bold  text-sm md:text-2xl text-red ">
