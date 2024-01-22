@@ -10,6 +10,9 @@ const InputChildData = () => {
   const handleOptionSelect = (selectedOption: string) => {
     console.log(`Selected option: ${selectedOption}`);
   };
+  const handleDateChange = (selectedDate: string) => {
+    console.log(selectedDate);
+  };
   return (
     <MainLayout>
       <section>
@@ -20,7 +23,7 @@ const InputChildData = () => {
           <FliedPrenaghcyInput
             heading="Tanggal Pemeriksaan*"
             subtext=" Pastikan Tanggal Yang Dimasukkan Sesuai Dengan Tanggal Pemeriksaan Yang Tertera Pada Laporan Hasil Pemeriksaan"
-            child={<Datepicker />}
+            child={<Datepicker onDateChange={handleDateChange} />}
           />
 
           <FliedPrenaghcyInput

@@ -1,75 +1,54 @@
+import useLocalStorage from "../hooks/useLocalStorage";
+import { useFetch } from "../hooks/useFetch";
+import Loader from "./Loader";
 import { Link } from "react-router-dom";
-import Arrow from "../assets/Arrow";
 
-const AddPrenagcyData = () => {
+interface AddPregnancyDataProps {
+  id: number;
+}
+
+const AddPrenagcyData = ({ id }: AddPregnancyDataProps) => {
+  const [userData] = useLocalStorage("user");
+  const [isLoading, data, , ,] = useFetch<{
+    data: DataKehamilan[];
+  }>(
+    {
+      method: "GET",
+      url: `/kehamilan/faskes/list?id=${id}&page=0&limit=10`,
+      headers: {
+        Authorization: `Bearer ${userData.jwtToken} `,
+      },
+    },
+    true
+  );
+  if (isLoading) {
+    return (
+      <>
+        <Loader />
+      </>
+    );
+  }
+
   return (
-    <section className=" mt-[35px] ">
-      {/*Headline Text */}
-      <div>
-        <h1 className="font-semibold text-2xl">Profil Calon Bayi</h1>
-        <h3 className="font-medium text-sm mt-5">
-          Nama Calon Bayi: Nasrah Hayati Fitri
-        </h3>
-        <h3 className="font-medium text-sm mt-5">
-          Hari Pertama Haid Terakhir: 10 Oktober 2021
-        </h3>
-        <h3 className="font-medium text-sm mt-5">
-          Prediksi Tanggal Kelahiran: 3 Juli 2022
-        </h3>
-        <h3 className="font-medium text-sm mt-5">
-          Usia Kehamilan: 4 Bulan (16 Minggu)
-        </h3>
-      </div>
+    <div className="flex flex-col">
+      {data?.data.map((item, index) => (
+        <div
+          key={index}
+          className="my-3 py-2 px-4 border border-border-grey rounded-lg flex flex-col sm:flex-row justify-between items-center"
+        >
+          <p className="mb-2 sm:mb-0 sm:mr-4">{item.namaCalonBayi}</p>
 
-      {/* Data Kehamilan Section */}
-      <h1 className="font-semibold text-2xl mt-9">Data Kehamilan</h1>
-
-      <button
-        type="button"
-        className="my-5 bg-orange text-white rounded-lg block text-sm font-semibold w-[60%] h-11"
-      >
-        Tambahkan Data Kehamilan
-      </button>
-
-      <div className="flex justify-between flex-row md:w-[60%]  my-5 border border-border-grey border-solid rounded-lg py-4 px-6  ">
-        <div className="flex flex-col">
-          <h2 className="font-semibold ">Pemeriksaan - 3</h2>
-          <h4>
-            Status Kehamilan: <span className="text-green">Baik</span>
-          </h4>
+          <Link to={"/profilCalonBayi"} state={{ data: item, id: id }}>
+            <button
+              type="button"
+              className="text-light-violet outline-none mt-2 sm:mt-0"
+            >
+              Lihat Detail
+            </button>
+          </Link>
         </div>
-        <Link to={"/prenagcyData"} className="p-1">
-          <Arrow />
-        </Link>
-      </div>
-
-      <div className="flex justify-between flex-row md:w-[60%]  my-5 border border-border-grey border-solid rounded-lg py-4 px-6  ">
-        <div className="flex flex-col">
-          <h2 className="font-semibold ">Pemeriksaan - 2</h2>
-          <h4>
-            Status Kehamilan: <span className="text-yellow">Lemah</span>
-          </h4>
-        </div>
-        <Link to={"/prenagcyData"} className="p-1">
-          <Arrow />
-        </Link>
-      </div>
-
-      <div className="flex justify-between flex-row md:w-[60%] my-5 border border-border-grey border-solid rounded-lg py-4 px-6  ">
-        <div className="flex flex-col">
-          <h2 className="font-semibold ">Pemeriksaan - 1</h2>
-          <h4>
-            Status Kehamilan: <span className="text-red">Beresiko</span>
-          </h4>
-        </div>
-        <Link to={"/prenagcyData"} className="p-1">
-          <Arrow />
-        </Link>
-      </div>
-      <button className=" w-full md:w-[60%] h-[46px] bg-transparent  text-ms text-orange font-semibold py-2 px-4 border border-orange rounded-lg">
-        Hapus Data & Profil Kehamilan
-      </button>
-    </section>
+      ))}
+    </div>
   );
 };
 export default AddPrenagcyData;

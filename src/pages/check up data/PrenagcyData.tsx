@@ -1,8 +1,20 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import MainLayout from "../../layout/Mainlayout";
 
 const PrenagcyData = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const userData = location.state?.data as PemeriksaanBayi;
+
+  const colorText = () => {
+    if (userData.statusKehamilan == "baik") {
+      return "text-green";
+    } else if (userData.statusKehamilan == "lemah") {
+      return "text-yellow";
+    }
+
+    return "text-red";
+  };
   return (
     <MainLayout>
       <section>
@@ -11,26 +23,31 @@ const PrenagcyData = () => {
         <div className="mt-8">
           <h1 className="font-semibold text-2xl">Detail Pemeriksaan</h1>
           <h3 className="font-medium text-xl my-4">
-            Tanggal Pemeriksaan: 18 Okt 2023
+            Tanggal Pemeriksaan: {userData.tanggalPemeriksaan}
           </h3>
-          <h3 className="font-medium text-xl">Diperiksa Oleh: Dr. Sumiati</h3>
+          <h3 className="font-medium text-xl">
+            Diperiksa Oleh: {userData.namaPemeriksa}
+          </h3>
         </div>
 
         <div className="mt-8">
           <h1 className="font-semibold text-2xl">Hasil Pemeriksaan</h1>
           <h3 className="font-medium text-xl mt-5">
-            Usia Kandungan: 16 minggu
+            Usia Kandungan: {userData.usiaKandungan}
           </h3>
           <h3 className="font-medium text-xl mt-5">
-            Tekanan Darah: 120/80 mmHg
+            Tekanan Darah: {userData.tekananDarah}
           </h3>
-          <h3 className="font-medium text-xl mt-5">Berat Badan Ibu: 89 kg</h3>
           <h3 className="font-medium text-xl mt-5">
-            Status Kehamilan: <span className="text-green">Baik</span>
+            Berat Badan Ibu: {userData.beratBadanIbu}
+          </h3>
+          <h3 className="font-medium text-xl mt-5">
+            Status Kehamilan:{" "}
+            <span className={`${colorText()}`}>{userData.statusKehamilan}</span>
           </h3>
 
           <h3 className="font-medium text-xl mt-5">
-            Pesan Tambahan: Jaga pola makannya ya bunda biar bayinya tetap sehat
+            Pesan Tambahan: {userData.pesanTambahan}
           </h3>
         </div>
 
@@ -49,7 +66,7 @@ const PrenagcyData = () => {
               type="button"
               className=" bg-orange  text-white  rounded-lg block text-ms font-semibold w-full h-full  "
             >
-              Tambahkan Data Kehamilan
+              Ubah Data Kehamilan
             </button>
           </Link>
         </div>

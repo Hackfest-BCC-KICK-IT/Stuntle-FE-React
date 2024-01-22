@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
 import SearchIcon from "../../assets/SearchIcon";
 import MainLayout from "../../layout/Mainlayout";
 import { useState } from "react";
 import FilterChips from "../../components/FilterChip";
+import ListOrtu from "./components/ListOrtu";
 
 const AddData = () => {
-  const [activeTab, setActiveTab] = useState("dataKehamilan");
+  const [activeTab, setActiveTab] = useState("semuaData");
   const [selectedKondisi, setSelectedKondisi] = useState("Semua Kondisi");
   const [selectedUsia, setSelectedUsia] = useState("Semua Bulan");
 
@@ -120,25 +120,7 @@ const AddData = () => {
             </div>
           )}
         </div>
-
-        {[...Array(6)].map((_, index) => (
-          <div
-            key={index}
-            className="my-3 py-2 px-4 border border-border-grey rounded-lg flex flex-col sm:flex-row justify-between items-center"
-          >
-            <p className="mb-2 sm:mb-0 sm:mr-4">
-              Nasrah Hayati Fitri / Muhammad Harizal Fikri
-            </p>
-            <Link to={"/parentProfile"}>
-              <button
-                type="button"
-                className="text-light-violet outline-none mt-2 sm:mt-0"
-              >
-                Lihat Profile
-              </button>
-            </Link>
-          </div>
-        ))}
+        <ListOrtu />
       </section>
     </MainLayout>
   );

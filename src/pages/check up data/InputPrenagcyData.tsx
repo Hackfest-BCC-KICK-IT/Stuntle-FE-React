@@ -1,39 +1,124 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Datepicker from "../../components/Datepicker";
 import Dropdown from "../../components/Dropdown";
 import FliedPrenaghcyInput from "../../components/FliedPrenaghcyInput";
 import MainLayout from "../../layout/Mainlayout";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { useFetch } from "../../hooks/useFetch";
+import Loader from "../../components/Loader";
 
-const options = ["Baik", "Lemah", "Beresiko"];
+const options = ["baik", "lemah", "beresiko"];
+
+interface PrenangcyDataModel {
+  tanggalPemeriksaan: string;
+  tempatPemeriksaan: string;
+  namaPemeriksa: string;
+  usiaKandungan: number;
+  tekananDarah: string;
+  beratBadanIbu: number;
+  statusKehamilan: string;
+  pesanTambahan: string;
+}
+
+//TODOS: ubah tanggal menjadi dd/mm/yyyy, yang number menjadi number saja
 
 const InputPrenagcyData = () => {
+  const location = useLocation();
+  const idOrtu = location.state?.idOrtu as number;
+  const idBayi = location.state?.idBayi as number;
   const navigate = useNavigate();
+  const [formData, setFormData] = useState<PrenangcyDataModel>({
+    tanggalPemeriksaan: "",
+    tempatPemeriksaan: "",
+    namaPemeriksa: "",
+    usiaKandungan: 0,
+    tekananDarah: "",
+    beratBadanIbu: 0,
+    statusKehamilan: "",
+    pesanTambahan: "",
+  });
+
+  const [userData] = useLocalStorage("user");
+
+  // consume api
+  const [isLoading, , , sendRequest, isSuccess] = useFetch<{}>({
+    method: "POST",
+    url: `/pemeriksaan/kehamilan/{id}`,
+    params: {
+      id: idOrtu,
+      data_kehamilan_id: idBayi,
+    },
+    headers: {
+      Authorization: `Bearer ${userData.jwtToken} `,
+    },
+    data: formData,
+  });
+
   const handleOptionSelect = (selectedOption: string) => {
-    console.log(`Selected option: ${selectedOption}`);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      statusKehamilan: selectedOption,
+    }));
   };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    const numericValue =
+      name === "usiaKandungan" || name === "beratBadanIbu"
+        ? parseFloat(value)
+        : value;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: numericValue,
+    }));
+  };
+
+  const handleDateChange = (selectedDate: string) => {
+    console.log(selectedDate);
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      tanggalPemeriksaan: selectedDate,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Form Data:", formData);
+
+    sendRequest();
+  };
+
+  if (isSuccess) {
+    navigate("/addData");
+  }
+
   return (
     <MainLayout>
       <section>
         <h1 className="font-semibold text-4xl text-center">Data Kehamilan</h1>
         <h2 className="font-semibold text-2xl mt-8">Detail Pemeriksaan</h2>
 
-        <form>
+        <form id="form-ini" onSubmit={(e) => handleSubmit(e)}>
           <FliedPrenaghcyInput
             heading="Tanggal Pemeriksaan*"
-            subtext=" Pastikan Tanggal Yang Dimasukkan Sesuai Dengan Tanggal Pemeriksaan
-            Yang Tertera Pada Laporan Hasil Pemeriksaan"
-            child={<Datepicker />}
+            subtext=" Pastikan Tanggal Yang Dimasukkan Sesuai Dengan Tanggal Pemeriksaan Yang Tertera Pada Laporan Hasil Pemeriksaan"
+            child={<Datepicker onDateChange={handleDateChange} />}
           />
 
           <FliedPrenaghcyInput
             heading="Tempat Pemeriksaan*"
-            subtext="Pastikan Nama Tempat Pemeriksaan Sesuai Dengan Hasil Laporan Yang
-            Dikirim Oleh Orang Tua"
+            subtext="Pastikan Nama Tempat Pemeriksaan Sesuai Dengan Hasil Laporan Yang Dikirim Oleh Orang Tua"
             child={
               <input
                 type="text"
                 className="w-full relative p-2 border border-border-grey rounded-md mt-2  pr-10"
                 placeholder="Masukkan Nama Tempat Ibu Memeriksakan Kandungannya disini"
+                name="tempatPemeriksaan"
+                onChange={(e) => handleChange(e)}
               />
             }
           />
@@ -46,6 +131,8 @@ const InputPrenagcyData = () => {
                 type="text"
                 className="w-full relative p-2 border border-border-grey rounded-md mt-2  pr-10"
                 placeholder="Masukkan Nama Dokter Atau Tenaga Kesehatan Yang Memeriksakan Kandungan Ibu Disini"
+                name="namaPemeriksa"
+                onChange={(e) => handleChange(e)}
               />
             }
           />
@@ -60,6 +147,8 @@ const InputPrenagcyData = () => {
                 type="text"
                 className="w-full relative p-2 border border-border-grey rounded-md mt-2  pr-10"
                 placeholder="Masukkan Usia Kandungan Ibu Disini"
+                name="usiaKandungan"
+                onChange={(e) => handleChange(e)}
               />
             }
           />
@@ -71,6 +160,8 @@ const InputPrenagcyData = () => {
                 type="text"
                 className="w-full relative p-2 border border-border-grey rounded-md mt-2  pr-10"
                 placeholder="mm/Hg"
+                name="tekananDarah"
+                onChange={(e) => handleChange(e)}
               />
             }
           />
@@ -82,6 +173,8 @@ const InputPrenagcyData = () => {
                 type="text"
                 className="w-full relative p-2 border border-border-grey rounded-md mt-2  pr-10"
                 placeholder="Masukkan Berat Badan Ibu Disini"
+                name="beratBadanIbu"
+                onChange={(e) => handleChange(e)}
               />
             }
           />
@@ -104,28 +197,38 @@ const InputPrenagcyData = () => {
                 type="text"
                 className="w-full relative p-2 border border-border-grey rounded-md mt-2  pr-10"
                 placeholder="Masukkan Pesan Tambahan Untuk Ibu Disini"
+                name="pesanTambahan"
+                onChange={(e) => handleChange(e)}
               />
             }
           />
           <div className="flex flex-col md:flex-row my-8 w-full gap-4  items-center">
-            <button
-              type="button"
-              onClick={() => navigate(-1)}
-              className=" w-full md:w-[50%] h-[46px] bg-transparent  text-ms text-orange font-semibold py-2 px-4 border border-border-grey rounded-lg"
-            >
-              Kembali
-            </button>
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <>
+                <button
+                  type="button"
+                  onClick={() => navigate(-1)}
+                  className="w-full md:w-[50%] h-[46px] bg-transparent  text-ms text-orange font-semibold py-2 px-4 border border-border-grey rounded-lg"
+                >
+                  Kembali
+                </button>
 
-            <button
-              type="button"
-              className=" bg-orange  text-white w-full md:w-[50%] h-[46px] rounded-lg block text-ms font-semibold   "
-            >
-              Simpan Data
-            </button>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="bg-orange  text-white w-full md:w-[50%] h-[46px] rounded-lg block text-ms font-semibold"
+                >
+                  Simpan Data
+                </button>
+              </>
+            )}
           </div>
         </form>
       </section>
     </MainLayout>
   );
 };
+
 export default InputPrenagcyData;

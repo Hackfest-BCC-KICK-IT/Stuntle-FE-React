@@ -73,8 +73,7 @@ const ListHelp = () => {
             </button>
           </div>
         </form>
-        <div className="flex">
-          <h2 className="font-bold">Filter Usia:</h2>
+        <div>
           <FilterChips
             selectedFilter={selectedFilter}
             filters={[

@@ -32,12 +32,14 @@ const AddChildData = () => {
       {/* Data Kehamilan Section */}
       <h1 className="font-semibold text-2xl mt-9">Data Anak Ke-1</h1>
 
-      <button
-        type="button"
-        className="my-5 bg-orange text-white rounded-lg block text-base font-semibold w-[60%] h-11"
-      >
-        Tambahkan Data Anak
-      </button>
+      <Link to={"/inputChildData"}>
+        <button
+          type="button"
+          className="my-5 bg-orange text-white rounded-lg block text-base font-semibold w-[60%] h-11"
+        >
+          Tambahkan Data Anak
+        </button>
+      </Link>
 
       <div className="flex justify-between flex-row w-[60%] h-[70px] my-5 border border-border-grey border-solid rounded-lg py-4 px-6  ">
         <div className="flex flex-col">
