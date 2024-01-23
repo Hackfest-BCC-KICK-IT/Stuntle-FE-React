@@ -10,7 +10,7 @@ import InputChildData from "./pages/check up data/InputChildData";
 import Login from "./pages/Login";
 import PermintaanBantuan from "./pages/request help/PermintaanBantuan";
 import Profil from "./pages/profile/Profil";
-import Homepage from "./pages/Homepage";
+import Homepage from "./pages/dashboard/Homepage";
 import DetailWaGroup from "./pages/Wagroup/DetailWaGroup";
 import EditDetailGroup from "./pages/Wagroup/EditDetailGroup";
 import AddWaGroup from "./pages/Wagroup/AddWaGroup";
