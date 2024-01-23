@@ -4,18 +4,47 @@ const Tagihan = () => {
   return (
     <MainLayout>
       <section>
-        <h1 className="heading1">API Data Stunting Saya</h1>
-        <h3 className="font-normal text-xl text-light-violet my-5">
-          Perhatian! API ini hanya akan memberikan informasi numerik untuk
-          pemetaan kondisi stunting di daerahmu sehingga data pribadi pasien,
-          seperti nama, umur, nomor telepon tidak akan dibagikan!
-        </h3>
-        <p className="text-lg font-bold">
-          <span className="mr-2">API:</span>
-          <a href="#" className="hover:cursor-pointer text-blue-700 underline">
-            api.stuntle.1234567890.puskemaskotalumur.netlify.app
-          </a>
-        </p>
+        <div className="h-[300px] space-y-5">
+          <h1 className="heading1">Tagihan Layanan</h1>
+          <h3>
+            Berikut adalah tagihan dari layanan yang Anda gunakan dalam
+            <br />
+            memprovide fungsionalitas dari fitur-fitur dan layanan pada aplikasi
+            Stuntle:
+          </h3>
+          <p className="font-bold">
+            Tipe Layanan Anda Saat ini :{" "}
+            <span className="text-light-violet">Gratis</span>
+          </p>
+          <p className="font-bold">
+            Total Tagihan Layanan Anda Bulan ini :{" "}
+            <span className="text-light-violet">Rp 0</span>
+          </p>
+          <button className=" bg-orange w-full md:w-[50%] h-[46px] text-white  rounded-lg block text-ms font-semibold ">
+            Upgrade Layanan
+          </button>
+        </div>
+        <div className="h-[300px] space-y-5 mt-4">
+          <h1 className="heading1">Credit Chatbot</h1>
+          <h3>
+            Berikut adalah jumlah credit tersisa di akunmu agar pengguna yang
+            terhubung
+            <br />
+            denganmu tetap dapat menggunakan fitur CATAS - Chat Assistant To
+            Avoid Stunting:
+          </h3>
+          <p className="font-bold">
+            Tipe Layanan Anda Saat ini :{" "}
+            <span className="text-light-violet">Gratis</span>
+          </p>
+          <p className="font-bold">
+            Sisa Credit Chatbot CATAS :{" "}
+            <span className="text-light-violet">Rp 0</span>
+          </p>
+          <button className=" bg-orange w-full md:w-[50%] h-[46px] text-white  rounded-lg block text-ms font-semibold ">
+            Top Up Credit
+          </button>
+        </div>
       </section>
     </MainLayout>
   );
