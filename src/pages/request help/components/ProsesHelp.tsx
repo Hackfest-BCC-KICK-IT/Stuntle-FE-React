@@ -1,43 +1,46 @@
-import { useNavigate } from "react-router-dom";
 import useLocalStorage from "../../../hooks/useLocalStorage";
-import { useFetch } from "../../../hooks/useFetch";
 import { useState } from "react";
 import Loader from "../../../components/Loader";
-
-//todo: entah kenapa ini perlu 2 kali di klick agar bisa berjalan dalam mengirimkan data statusAjuan
-// statusAjuan tidak bisa secara realtime updatenyaa
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ProsesHelp: React.FC<{ item: HelpModel }> = ({ item }) => {
   const navigate = useNavigate();
-  const [prosesData, setProsesData] = useState({
-    pesanTambahan: "",
-    statusAjuan: "",
-  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [pesanTambahan, setPesanTambahan] = useState<string>("");
 
   const [userData] = useLocalStorage("user");
-  const [isLoading, , , formSubmit, isSuccess] = useFetch<{}>({
-    method: "PUT",
-    url: `/bantuan/${item.id}`,
-    headers: {
-      Authorization: `Bearer ${userData.jwtToken} `,
-    },
-    data: prosesData,
-  });
+
+  const sendRequest = async (status: string) => {
+    setIsLoading(true);
+
+    try {
+      const res = await axios({
+        method: "PUT",
+        url: `/bantuan/${item.id}`,
+        headers: {
+          Authorization: `Bearer ${userData.jwtToken} `,
+        },
+        data: {
+          pesanTambahan: pesanTambahan,
+          statusAjuan: status,
+        },
+      });
+
+      if (res.status === 201 || res.status === 200) {
+        setIsSuccess(true);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   if (isSuccess) {
     navigate("/permintaanBantuan");
   }
-
-  const sendRequest = (userAction: string) => {
-    setProsesData((prev) => {
-      const newState = {
-        ...prev,
-        statusAjuan: userAction,
-      };
-      return newState;
-    });
-    formSubmit();
-  };
 
   return (
     <>
@@ -63,13 +66,8 @@ const ProsesHelp: React.FC<{ item: HelpModel }> = ({ item }) => {
           rows={4}
           className="block p-2.5 w-full border border-border-grey text-sm text-black  rounded-lg   "
           placeholder="Tuliskan pesan tambahan kepada orang tua atas respon yang anda berikan, baik menerima maupun menolak permintaan bantuannya"
-          value={prosesData.pesanTambahan}
-          onChange={(e) =>
-            setProsesData((prev) => ({
-              ...prev,
-              pesanTambahan: e.target.value,
-            }))
-          }
+          value={pesanTambahan}
+          onChange={(e) => setPesanTambahan(e.target.value)}
         />
       </div>
       {isLoading ? (

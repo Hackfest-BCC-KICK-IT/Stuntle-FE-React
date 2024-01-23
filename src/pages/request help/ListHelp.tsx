@@ -18,7 +18,12 @@ const ListHelp = () => {
   }>(
     {
       method: "GET",
-      url: `/bantuan/faskes?limit=10&page=0&statusAjuan=${helpType}`,
+      url: `/bantuan/faskes`,
+      params: {
+        limit: 10,
+        page: 0,
+        statusAjuan: helpType,
+      },
       headers: {
         Authorization: `Bearer ${userData.jwtToken} `,
       },
