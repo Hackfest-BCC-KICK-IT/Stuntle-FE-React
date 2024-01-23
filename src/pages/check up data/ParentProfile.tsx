@@ -91,7 +91,7 @@ const ParentProfile = () => {
 
         <div>
           {activeTab === "dataKehamilan" && <AddPrenagcyData id={idOrtu} />}
-          {activeTab === "dataAnak" && <AddChildData />}
+          {activeTab === "dataAnak" && <AddChildData id={idOrtu} />}
         </div>
       </section>
     </MainLayout>

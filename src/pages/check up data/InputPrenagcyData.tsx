@@ -21,8 +21,6 @@ interface PrenangcyDataModel {
   pesanTambahan: string;
 }
 
-//TODOS: ubah tanggal menjadi dd/mm/yyyy, yang number menjadi number saja
-
 const InputPrenagcyData = () => {
   const location = useLocation();
   const idOrtu = location.state?.idOrtu as number;

@@ -26,6 +26,7 @@ import Register from "./pages/Register";
 import DataStunting from "./pages/data_stunting/DataStunting";
 import Tagihan from "./pages/tagihan/Tagihan";
 import ProfilBayi from "./pages/check up data/components/ProfilBayi";
+import ProfileAnak from "./pages/check up data/components/ProfileAnak";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
         <Route path="/dataStunting" element={<DataStunting />} />
         <Route path="/tagihan" element={<Tagihan />} />
         <Route path="/profilCalonBayi" element={<ProfilBayi />} />
+        <Route path="/profileCalonAnak" element={<ProfileAnak />} />
       </Routes>
     </BrowserRouter>
   );
